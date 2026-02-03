@@ -12,49 +12,51 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final _lists = context.watch<Details>().l;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Shopping App',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: _lists.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  semanticContainer: false,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          _lists[index],
-                        ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            context.read<Details>().add(_lists[index]);
-                          },
-                          icon: Icon(Icons.add_circle_outline),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
+    return Consumer<Details>(builder: (BuildContext context, ll, Widget? child) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Shopping App',
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
           ),
-        ],
-      ),
-    );
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: ll.l.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    semanticContainer: false,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            ll.l[index],
+                          ),
+                          Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              context.read<Details>().add(ll.l[index]);
+                            },
+                            icon: Icon(Icons.add_circle_outline),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
+
